@@ -7,7 +7,8 @@ exports.up = function(knex, Promise) {
     table.integer('user_id');
     table.integer('topic_id');
     table.string('topic_suffix');
-    table.boolean('active');
+    table.boolean('active').defaultTo(true);
+    table.timestamps();
   })
 };
 
