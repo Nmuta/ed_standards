@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var standards = require('./routes/standards');
+var auth_checker = require('./lib/auth_checker');
 var bcrypt = require('bcrypt');
 
 var app = express();
@@ -25,6 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/standards', auth_checker);
+app.use('/standards', standards);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
