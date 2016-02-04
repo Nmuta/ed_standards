@@ -1,6 +1,8 @@
 var bcrypt = require('bcrypt');
 var pwd = bcrypt.hashSync("password",2);
 var date = new Date();
+var admin_role_id;
+var users_role_id;
 
 exports.seed = function(knex, Promise) {
   return Promise.join(
@@ -14,13 +16,15 @@ exports.seed = function(knex, Promise) {
     knex('users').insert({name: 'Sheriff', email: "admin@admin.com", password: pwd, created_at: date}),
     knex('users').insert({name: 'Joe', email: "joe@joe.com", password: pwd, created_at: date})
     // knex('roles').select().then(function(roles){
-    //     var admin_role_id = Number(roles[0].id);
-    //     return admin_role_id
-    //   }).then(function(rid){
-    //     rid = Number(rid);
-    //     knex('users').where({name: "Sheriff"}).update({role_id: 1}).then(function(){
-    //
+    //   return (roles)
+    // }).then(function(roles){
+    //   var adm = roles[0].id;
+    //   var usr = roles[1].id;
+    //   return (
+    //     knex('users').where({name: "Sheriff"}).update({role_id: adm}).then(function(){
+    //       return  knex('users').where({name: "Joe"}).update({role_id: usr});
     //     })
-    //   })
+    //   );
+    // })
    );
 };
