@@ -49,6 +49,13 @@ router.post('/:id/update', function(req, res, next) {
   });
 });
 
+router.get('/:id/delete', function(req, res, next) {
+  var stan_id = req.params.id;
+  new Standards('id', stan_id).destroy().then(function(standard) {
+    res.redirect('/standards');
+  });
+});
+
 // comments
 router.post('/:id/comments', function(req, res, next) {
   var stan_id = req.params.id;
@@ -60,6 +67,13 @@ router.post('/:id/comments', function(req, res, next) {
 router.post('/:id/comments/:comment_id/update', function(req, res, next) {
   var comment_id = req.params.comment_id;
   new Comments('id', comment_id).save({comment: req.body.comment}, {patch: true}).then(function(comment) {
+    res.redirect('/standards/'+req.params.id);
+  });
+});
+
+router.get('/:id/comments/:comment_id/delete', function(req, res, next) {
+  var comment_id = req.params.comment_id;
+  new Comments('id', comment_id).destroy().then(function(comment) {
     res.redirect('/standards/'+req.params.id);
   });
 });
