@@ -4,7 +4,17 @@ var bookshelf = require("../db/bookshelf");
 
 
 var Standards = bookshelf.Model.extend({
-  tableName: 'standards'
+  tableName: 'standards',
+  comments: function() {
+    return this.hasMany(Comments);
+  }
+});
+
+var Comments = bookshelf.Model.extend({
+  tableName: 'comments',
+  standard: function() {
+    return this.belongsTo(Standards);
+  }
 });
 
 /* GET all standards listing. */
@@ -18,7 +28,8 @@ router.get('/', function(req, res, next) {
 
 /* GET all standards listing. */
 router.get('/:id', function(req, res, next) {
-  Standards.where('id', req.params.id).fetch().then(function(stan) {
+  Standards.where('id', req.params.id).fetch({withRelated: ['comments']}).then(function(stan) {
+    //res.json(stan.related('comments').toJSON());
     res.json(stan.toJSON());
   }).catch(function(err) {
     console.error(err);
