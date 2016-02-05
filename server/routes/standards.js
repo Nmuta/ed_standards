@@ -49,4 +49,12 @@ router.post('/:id/update', function(req, res, next) {
   });
 });
 
+// comments
+router.post('/:id/comments', function(req, res, next) {
+  var stan_id = req.params.id;
+  new Comments({comment: req.body.comment, standard_id: stan_id}).save().then(function(model) {
+    res.redirect('/standards/'+stan_id);
+  });
+});
+
 module.exports = router;
