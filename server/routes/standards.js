@@ -44,7 +44,7 @@ router.post('/', function(req, res, next) {
 });
 
 router.post('/:id/update', function(req, res, next) {
-   new Standards('id', req.params.id).save(req.body, {patch: true}).then(function(model) {
+   new Standards('id', req.params.id).save(req.body, {patch: true}).then(function(standard) {
     res.redirect("/standards");
   });
 });
@@ -52,8 +52,15 @@ router.post('/:id/update', function(req, res, next) {
 // comments
 router.post('/:id/comments', function(req, res, next) {
   var stan_id = req.params.id;
-  new Comments({comment: req.body.comment, standard_id: stan_id}).save().then(function(model) {
+  new Comments({comment: req.body.comment, standard_id: stan_id}).save().then(function(comment) {
     res.redirect('/standards/'+stan_id);
+  });
+});
+
+router.post('/:id/comments/:comment_id/update', function(req, res, next) {
+  var comment_id = req.params.comment_id;
+  new Comments('id', comment_id).save({comment: req.body.comment}, {patch: true}).then(function(comment) {
+    res.redirect('/standards/'+req.params.id);
   });
 });
 
