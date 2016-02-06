@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="jos">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var myDataRef = new Firebase('https://xli8ts3dqqm.firebaseio-demo.com/');
+    </script>
+    <base href="/">
+
+    Standards app
+    <a href="/">Home</a>
+    <a href="/standards">Standards</a>
+
+    <div ng-view></div>
+
+  </body>
+</html>
