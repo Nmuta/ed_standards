@@ -3,7 +3,7 @@ app.controller("HomeController", function($scope, $http){
 });
 
 
-app.controller("StandardsController", function($scope, $http){
+app.controller("StandardsController", function($scope, $http, $routeParams){
     $http.get("http://localhost:3000/standards").then(function (response) {
     $scope.standards = response.data;
   });
