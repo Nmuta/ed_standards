@@ -18,13 +18,10 @@ router.post('/login', function(req, res, next) {
   var logged_in = false;
   Users.where('email',email ).fetch().then(function(usr) {
     var hshed_pwd = usr.toJSON().password;
-    console.log("comparing "+password+" with "+hshed_pwd);
     bcrypt.compare(password, hshed_pwd, function(err, res) {
       if (res){
         logged_in = true;
-        console.log("i logged in a user");
       } else {
-        console.log("i rejected in a user");
       }
     });
     res.json({logged_in: logged_in})
