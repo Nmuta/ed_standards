@@ -8,13 +8,11 @@ app.config(function($routeProvider, $locationProvider) {
       })
       .when('/standards', {
         templateUrl: 'partials/standards/index.html',
-        controller: 'StandardsController',
-        method: "index"
+        controller: 'StandardsIndexController'
       })
       .when('/standards/:id', {
         templateUrl: 'partials/standards/show.html',
-        controller: 'StandardsController'
-        method: "show"
+        controller: 'StandardsShowController'
       })
 
     $locationProvider.html5Mode(true);
