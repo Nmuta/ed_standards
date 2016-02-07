@@ -6,10 +6,10 @@ app.controller("UsersLoginController", function($scope, $http, UsersFactory){
     $scope.users = {}
     $scope.loginUser = function(){
       var data = {email: $scope.users.email, password: $scope.users.password};
-      console.log(data);
       UsersFactory.loginUser(data).then(function(success){
+        console.log(success.data.logged_in);
         console.log("users logged in");
-      }, failure());
+      }, failure);
 
       function failure(){
         console.log("failed login");
