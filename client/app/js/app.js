@@ -22,6 +22,14 @@ app.config(function($routeProvider, $locationProvider) {
         templateUrl: 'partials/standards/create.html',
         controller: 'StandardsCreateController'
       })
+      .when('/users/login', {
+        templateUrl: 'partials/users/login.html',
+        controller: 'UsersLoginController'
+      })
+      .when('/users/logout', {
+        templateUrl: 'partials/users/logout.html',
+        controller: 'UsersLogoutController'
+      })
 
 
     $locationProvider.html5Mode(true);
