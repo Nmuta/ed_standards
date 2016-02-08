@@ -13,6 +13,7 @@ var auth_checker = require('./lib/auth_checker');
 var bcrypt = require('bcrypt');
 
 var expressJwt = require('express-jwt');
+//TODO: relocate to .env
 var jwtSecret = "asdfkladsfasdfsd";
 
 
