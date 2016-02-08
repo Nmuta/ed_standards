@@ -3,7 +3,7 @@
 // });
 
 app.factory("UsersFactory", ['$http', function($http, $location){
-  UsersFactory = {}
+  var UsersFactory = {}
   UsersFactory.loginUser =  function(data){
      return $http.post("http://localhost:3000/users/login", data );
   }
@@ -11,12 +11,16 @@ app.factory("UsersFactory", ['$http', function($http, $location){
 }]);
 
 app.factory("TokenFactory", ['$http', function($http){
-    TokenFactory  =  {};
+    var TokenFactory  =  {};
 
-    TokenFactory.setToken = function(token, username){
+    TokenFactory.setToken = function(token){
       localStorage.setItem("token", token);
+      console.log("setting token: "+token);
+    }
+
+    TokenFactory.setUser= function(username){
       localStorage.setItem("username", username);
-      console.log("setting local storage item");
+      console.log("setting user "+user);
     }
 
     TokenFactory.getToken = function(){
@@ -40,10 +44,25 @@ app.factory("TokenFactory", ['$http', function($http){
     return TokenFactory;
 }]);
 
+app.factory("AuthInterceptor",  function(TokenFactory){
+
+    var AuthInterceptor = {request: addToken};
+    function addToken(config){
+
+       var token = TokenFactory.getToken();
+       if (token){
+         config.headers = config.headers || {};
+         config.headers.Authorization = "Bearer: "+token;
+       }
+    };
+
+    return AuthInterceptor;
+});
+
 
 app.factory('StandardsFactory', ['$http', function($http, $location) {
 
-  StandardsFactory = {};
+  var StandardsFactory = {};
 
   StandardsFactory.getIndex = function () {
         return $http.get('http://localhost:3000/standards/');

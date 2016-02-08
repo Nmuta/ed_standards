@@ -14,8 +14,8 @@ app.controller("UsersLoginController", function($scope, $http, UsersFactory, Tok
       var data = {email: $scope.users.email, password: $scope.users.password};
       UsersFactory.loginUser(data).then(function(success){
         if(success.data.token && success.data.username){
-            console.log("name is " +success.data.name);
-            TokenFactory.setToken(success.data.token, success.data.username);
+            TokenFactory.setToken(success.data.token);
+            TokenFactory.setUser(success.data.username);
         } else {
           alert("Invalid login.")
         }
