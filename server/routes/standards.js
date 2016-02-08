@@ -40,7 +40,7 @@ router.get('/:id', function(req, res, next) {
 router.post('/', function(req, res, next) {
   new Standards(req.body).save().then(function(model) {
     var response = {response: "server side standard creation"}
-    res.json(response); 
+    res.json(response);
   });
 });
 
@@ -53,7 +53,8 @@ router.post('/:id/update', function(req, res, next) {
 router.get('/:id/delete', function(req, res, next) {
   var stan_id = req.params.id;
   new Standards('id', stan_id).destroy().then(function(standard) {
-    res.redirect('/standards');
+    var response = {response: "server side standard creation"}
+    res.json(response); 
   });
 });
 

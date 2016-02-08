@@ -1,6 +1,13 @@
 app.controller("MenuController", function($scope, $http, TokenFactory){
-  $scope.currentUser = TokenFactory.getToken();
-  $scope.username = TokenFactory.getUser();
+  $scope.$watch (
+    function(){
+      return TokenFactory.getToken();
+    },
+    function(newVal, oldVal){
+      $scope.currentUser = newVal;
+      $scope.username =  TokenFactory.getUser();
+    }
+  )
 });
 
 app.controller("HomeController", function($scope, $http, TokenFactory){

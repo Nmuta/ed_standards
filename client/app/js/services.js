@@ -47,6 +47,7 @@ app.factory("TokenFactory", function(){
 app.factory("AuthInterceptor",  function(TokenFactory){
 
     var AuthInterceptor = {request: addToken};
+
     function addToken(config){
 
        var token = TokenFactory.getToken();
