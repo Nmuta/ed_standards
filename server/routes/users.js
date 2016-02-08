@@ -3,6 +3,8 @@ var router = express.Router();
 var bookshelf = require("../db/bookshelf");
 var bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
+//TODO: relocate to .env
+var jwtSecret = "asdfkladsfasdfsd";
 
 
 var Users = bookshelf.Model.extend({
