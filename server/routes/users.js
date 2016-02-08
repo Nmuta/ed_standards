@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var bookshelf = require("../db/bookshelf");
 var bcrypt = require("bcrypt");
+var jwt = require("jsonwebtoken");
+var jwtSecret = "asdfkladsfasdfsd";
 
 var Users = bookshelf.Model.extend({
   tableName: 'users'
@@ -16,17 +18,20 @@ router.post('/login', function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
   Users.where('email',email ).fetch().then(function(usr) {
-    var logged_in = false;
-    var hshed_pwd = usr.toJSON().password;
+    user = usr.toJSON();
+    var hshed_pwd =user.password;
     bcrypt.compare(password, hshed_pwd, function(err, response) {
       if (response){
-        logged_in = true;
+        var user_bundle = {email: user.email }
+        var token  = jwt.sign({user_bundle}, jwtSecret);
+        res.json({username: user.name, token: token});
         console.log("success logging in a user");
       }else{
         console.log("bad password");
+        res.json({logged_in: false});
       }
       console.log("log in status  "+logged_in);
-      res.json({logged_in: logged_in});
+      res.json({logged_in: false});
     });
 
   }).catch(function(err) {
