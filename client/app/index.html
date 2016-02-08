@@ -9,27 +9,34 @@
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="js/services.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
+    <div class="header"></div>
     <base href="/">
-    <div ng-controller="MenuController">
-      <h5>Standards app</h5>
+    <div class="page-wrap">
+      <div class="form-box-container">
+        <div ng-controller="MenuController">
+          <h5>Standards app</h5>
 
-      <a href="/">Home</a>
-      <a href="/standards">Standards</a>
-      <a href="/users/login">Login User</a>
-      <span ng-show="currentUser">
-       <a href="/users/logout">Logout User</a>
-      </span>
-      <hr>
-      <div ng-show="currentUser">
-        <br>
-        Welcome, {{username}} !
-        <br>
-        <a href="/standards/new">Create Standard</a>
+          <a href="/">Home</a>
+          <a href="/standards">Standards</a>
+          <a href="/users/login">Login User</a>
+          <span ng-show="currentUser">
+           <a href="/users/logout">Logout User</a>
+          </span>
+          <hr>
+          <div ng-show="currentUser">
+            <br>
+            Welcome, {{username}} !
+            <br>
+            <a href="/standards/new">Create Standard</a>
 
-      </div>
-    </div>
-    <div ng-view></div>
+          </div>
+        </div>
+        <div ng-view></div>
+  </div>
+  </div>
+    <div class="footer"></div>
   </body>
 </html>

@@ -1,0 +1,109 @@
+body {
+  font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #8A8A7B;
+  margin: 0;
+}
+
+h1{
+  font-family: "Helvetica";
+  color: #fefefe;
+}
+
+.header-cont {
+    width:100vw;
+    top:0px;
+    display: block;
+}
+
+.header {
+    height: 75px;
+    background: #232323;
+    margin: 0px auto;
+    background-image: url(../images/logo.png);
+    background-repeat: no-repeat;
+    background-position: 35px;
+}
+
+div.page-wrap{
+  padding: 40px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.container {
+
+}
+
+.container h1 {
+  margin-bottom: 2em;
+}
+
+input[type="radio"] {
+  margin-right: 1em;
+}
+
+table {
+  margin-top: 3em;
+}
+
+.btn-link {
+  padding: 0px;
+}
+
+.form-box {
+    width: 400px;
+    height: 400px;
+    display: inline-block;
+    padding: 20px;
+    vertical-align: top;
+    border: 1px solid #eee;
+    background-color: #fefefe;
+}
+
+.form-box-container{
+  width: 90vw;
+  height: auto;
+  margin: 0px auto;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 3px 3px 1px #222;
+}
+
+a.home-link{
+  width: 230px;
+  height: 42px;
+  display:block;
+  float:left;
+}
+
+.footer {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:30px;
+   width:100%;
+   background:#333;
+}
+
+table.table-pattern tr:nth-child(even){
+  background-color: #333;
+  color: #fefefe;
+}
+
+table.table-pattern tr:nth-child(odd){
+  background-color: #ededed;
+}
+
+.header_link_box a{
+  float:left;
+  width: 100px;
+  margin: 0px 10px;
+}
+
+.header_link_box {
+  float:left;
+  width: 300px;
+  padding-top: 12px;
+}
