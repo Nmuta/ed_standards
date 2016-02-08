@@ -39,7 +39,8 @@ router.get('/:id', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   new Standards(req.body).save().then(function(model) {
-    // res.redirect("/standards"); no need to redirect in the api
+    var response = {response: "server side standard creation"}
+    res.json(response); 
   });
 });
 

@@ -1,10 +1,15 @@
 <h3>All Standards</h3>
 
 <div class="standards_collection">
-  <div class="standard_detail" ng-repeat="standard in standards">
-    {{standard.title}}
-    <span>
-      <a href="/standards/{{standard.id}}">view</a>
-    </span>
+  <div ng-show="show_standards">
+    <div class="standard_detail" ng-repeat="standard in standards">
+      {{standard.title}}
+      <span>
+        <a href="/standards/{{standard.id}}">view</a>
+      </span>
+    </div>
+  </div>
+  <div ng-hide="show_standards">
+    You must be logged in to see standards. 
   </div>
 </div>

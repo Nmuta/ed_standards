@@ -34,9 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-// app.use('/', expressJwt({secret: jwtSecret}).unless({path: ['/users/login']}));
+//app.use('/', expressJwt({secret: jwtSecret}).unless({path: ['/users/login']}));
 app.use('/users', users);
-app.use('/standards', auth_checker);
 app.use('/standards', standards);
 
 

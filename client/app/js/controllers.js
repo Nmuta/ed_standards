@@ -33,9 +33,10 @@ app.controller("UsersLogoutController", function($scope, TokenFactory){
 
 
 app.controller('StandardsIndexController',function($scope, StandardsFactory) {
-  console.log("index called");
+  $scope.show_standards = false;
   StandardsFactory.getIndex().then(function(entries) {
     $scope.standards = entries.data;
+    $scope.show_standards = true;
   });
 
 }).controller('StandardsShowController',function($scope, StandardsFactory, $routeParams) {
@@ -47,19 +48,15 @@ app.controller('StandardsIndexController',function($scope, StandardsFactory) {
   //   $scope.standard = entry;
   // });
 }).controller('StandardsCreateController',function($scope, StandardsFactory, $routeParams) {
-  console.log("create called");
-  params = {title: "funky chicken"};
-  StandardsFactory.postNew(params).then(function() {
-    console.log("I made it");
-  })
+
+
 }).controller('StandardsNewController',function($scope, StandardsFactory, $routeParams, $location) {
-  console.log("new called");
   $scope.standard = {};
     $scope.addStandard = function(){
       params = {title:  $scope.standard.title};
       StandardsFactory.postNew(params).then(function(success){
-        console.log("do we even get here??");
-    }, errorHandler());
+         console.log("successful post from "+success.data.response)
+    }, errorHandler );
   }
   function errorHandler(){
     console.log("error creating new standard");
