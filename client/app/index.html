@@ -12,15 +12,16 @@
   </head>
   <body>
     <base href="/">
-
-    Standards app
-    <a href="/">Home</a>
-    <a href="/standards">Standards</a>
-    <a href="/standards/new">New</a>
-    <a href="/users/login">Login User</a>
-    <a href="/users/logout">Logout User</a>
-
+    <div ng-controller="MenuController">
+      Standards app
+      <a href="/">Home</a>
+      <a href="/standards">Standards</a>
+      <a href="/users/login">Login User</a>
+      <div ng-show="currentUser">
+        <a href="/standards/new">Create Standard</a>
+        <a href="/users/logout">Logout User</a>
+      </div>
+    </div>
     <div ng-view></div>
-
   </body>
 </html>

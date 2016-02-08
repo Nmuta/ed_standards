@@ -22,16 +22,14 @@ router.post('/login', function(req, res, next) {
     var hshed_pwd =user.password;
     bcrypt.compare(password, hshed_pwd, function(err, response) {
       if (response){
-        var user_bundle = {email: user.email }
-        var token  = jwt.sign({user_bundle}, jwtSecret);
+        var user_bundle = {email: user.email, username: user.name }
+        var token  = jwt.sign(user_bundle, jwtSecret);
         res.json({username: user.name, token: token});
         console.log("success logging in a user");
       }else{
         console.log("bad password");
-        res.json({logged_in: false});
+        res.json({username: false});
       }
-      console.log("log in status  "+logged_in);
-      res.json({logged_in: false});
     });
 
   }).catch(function(err) {

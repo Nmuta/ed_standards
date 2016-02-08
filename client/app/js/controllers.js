@@ -1,14 +1,23 @@
-app.controller("HomeController", function($scope, $http){
-  $scope.message = "welcome to the app";
+app.controller("MenuController", function($scope, $http, TokenFactory){
+  $scope.currentUser = TokenFactory.getToken();
 });
 
-app.controller("UsersLoginController", function($scope, $http, UsersFactory){
+app.controller("HomeController", function($scope, $http, TokenFactory){
+  $scope.message = "welcome to the app";
+  $scope.currentUser = TokenFactory.getToken();
+});
+
+app.controller("UsersLoginController", function($scope, $http, UsersFactory, TokenFactory){
     $scope.users = {}
     $scope.loginUser = function(){
       var data = {email: $scope.users.email, password: $scope.users.password};
       UsersFactory.loginUser(data).then(function(success){
-        console.log(success.data.logged_in);
-        console.log("users logged in");
+        if(success.data.token && success.data.username){
+            $scope.logged_in = true;
+            TokenFactory.setToken(success.data.token);
+        } else {
+          alert("Invalid login.")
+        }
       }, failure);
 
       function failure(){
@@ -17,8 +26,8 @@ app.controller("UsersLoginController", function($scope, $http, UsersFactory){
     }
 });
 
-app.controller("UsersLogoutController", function($scope, $http){
-
+app.controller("UsersLogoutController", function($scope, TokenFactory){
+   TokenFactory.clearToken("token");
 });
 
 

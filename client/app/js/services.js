@@ -10,6 +10,27 @@ app.factory("UsersFactory", ['$http', function($http, $location){
   return UsersFactory;
 }]);
 
+app.factory("TokenFactory", ['$http', function($http){
+    TokenFactory  =  {};
+
+    TokenFactory.setToken = function(token){
+      localStorage.setItem("token", token);
+      console.log("setting local storage item");
+    }
+
+    TokenFactory.getToken = function(){
+      the_token = localStorage.getItem("token");
+      console.log("getting local storage item: "+the_token);
+      return the_token;
+    }
+
+    TokenFactory.clearToken = function(key){
+      localStorage.removeItem(key);
+      console.log("clearing local storage item : " +key);
+    }
+
+    return TokenFactory;
+}]);
 
 
 app.factory('StandardsFactory', ['$http', function($http, $location) {
