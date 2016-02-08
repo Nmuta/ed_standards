@@ -12,6 +12,11 @@ var standards = require('./routes/standards');
 var auth_checker = require('./lib/auth_checker');
 var bcrypt = require('bcrypt');
 
+var expressJwt = require('express-jwt');
+var jwtSecret = "asdfkladsfasdfsd";
+
+
+
 var app = express();
 
 // view engine setup
@@ -28,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
+app.use('/', expressJwt({secret: jwtSecret}).unless({path: ['/users/login']}));
 app.use('/users', users);
 app.use('/standards', auth_checker);
 app.use('/standards', standards);

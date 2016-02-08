@@ -1,7 +1,7 @@
 var app = angular.module("jos", ['ngRoute', 'ngResource']);
 
 app.config(function($routeProvider, $locationProvider, $httpProvider) {
-    //$httpProvider.interceptors.push('AuthInterceptor');
+    $httpProvider.interceptors.push('AuthInterceptor');
 
     $routeProvider
       .when('/', {

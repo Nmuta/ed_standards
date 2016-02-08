@@ -10,7 +10,7 @@ app.factory("UsersFactory", ['$http', function($http, $location){
   return UsersFactory;
 }]);
 
-app.factory("TokenFactory", ['$http', function($http){
+app.factory("TokenFactory", function(){
     var TokenFactory  =  {};
 
     TokenFactory.setToken = function(token){
@@ -20,7 +20,7 @@ app.factory("TokenFactory", ['$http', function($http){
 
     TokenFactory.setUser= function(username){
       localStorage.setItem("username", username);
-      console.log("setting user "+user);
+      console.log("setting user "+username);
     }
 
     TokenFactory.getToken = function(){
@@ -42,7 +42,7 @@ app.factory("TokenFactory", ['$http', function($http){
     }
 
     return TokenFactory;
-}]);
+});
 
 app.factory("AuthInterceptor",  function(TokenFactory){
 
@@ -54,6 +54,7 @@ app.factory("AuthInterceptor",  function(TokenFactory){
          config.headers = config.headers || {};
          config.headers.Authorization = "Bearer: "+token;
        }
+       return config;
     };
 
     return AuthInterceptor;
