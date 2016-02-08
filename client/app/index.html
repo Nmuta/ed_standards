@@ -13,13 +13,21 @@
   <body>
     <base href="/">
     <div ng-controller="MenuController">
-      Standards app
+      <h5>Standards app</h5>
+
       <a href="/">Home</a>
       <a href="/standards">Standards</a>
       <a href="/users/login">Login User</a>
+      <span ng-show="currentUser">
+       <a href="/users/logout">Logout User</a>
+      </span>
+      <hr>
       <div ng-show="currentUser">
+        <br>
+        Welcome, {{username}} !
+        <br>
         <a href="/standards/new">Create Standard</a>
-        <a href="/users/logout">Logout User</a>
+
       </div>
     </div>
     <div ng-view></div>

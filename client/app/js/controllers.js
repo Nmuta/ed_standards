@@ -1,5 +1,6 @@
 app.controller("MenuController", function($scope, $http, TokenFactory){
   $scope.currentUser = TokenFactory.getToken();
+  $scope.username = TokenFactory.getUser();
 });
 
 app.controller("HomeController", function($scope, $http, TokenFactory){
@@ -13,8 +14,8 @@ app.controller("UsersLoginController", function($scope, $http, UsersFactory, Tok
       var data = {email: $scope.users.email, password: $scope.users.password};
       UsersFactory.loginUser(data).then(function(success){
         if(success.data.token && success.data.username){
-            $scope.logged_in = true;
-            TokenFactory.setToken(success.data.token);
+            console.log("name is " +success.data.name);
+            TokenFactory.setToken(success.data.token, success.data.username);
         } else {
           alert("Invalid login.")
         }
