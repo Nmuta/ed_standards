@@ -54,6 +54,7 @@ app.run(function ($rootScope, $location, $window, TokenFactory) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
     if (next && next.restricted && !$window.localStorage.getItem("token")) {
+        $window.alert("You must be logged in to do that");
         $location.path('/users/login');
     }
 
