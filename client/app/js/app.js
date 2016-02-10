@@ -10,29 +10,56 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
       })
       .when('/standards', {
         templateUrl: 'partials/standards/index.html',
-        controller: 'StandardsIndexController'
+        controller: 'StandardsIndexController',
+        restricted: true
       })
       .when('/standards/new', {
         templateUrl: 'partials/standards/new.html',
-        controller: 'StandardsNewController'
+        controller: 'StandardsNewController',
+        restricted: true
       })
       .when('/standards/:id', {
         templateUrl: 'partials/standards/show.html',
-        controller: 'StandardsShowController'
+        controller: 'StandardsShowController',
+        restricted: true
       })
       .when('/standards/create', {
         templateUrl: 'partials/standards/create.html',
-        controller: 'StandardsCreateController'
+        controller: 'StandardsCreateController',
+        restricted: true
       })
       .when('/users/login', {
         templateUrl: 'partials/users/login.html',
-        controller: 'UsersLoginController'
+        controller: 'UsersLoginController',
+        preventWhenLoggedIn: true
       })
       .when('/users/logout', {
         templateUrl: 'partials/users/logout.html',
-        controller: 'UsersLogoutController'
+        controller: 'UsersLogoutController',
+        restricted: true,
+        resolve: {
+        app: function(UsersFactory, $location){
+          UsersFactory.logoutUser();
+          $location.path("/login");
+        }
+      }
       })
 
 
     $locationProvider.html5Mode(true);
+});
+
+app.run(function ($rootScope, $location, $window, TokenFactory) {
+  TokenFactory.getUser();
+  $rootScope.$on('$routeChangeStart', function (event, next, current) {
+
+    if (next && next.restricted && !$window.localStorage.getItem("token")) {
+        $location.path('/users/login');
+    }
+
+    if (next && next.preventWhenLoggedIn && $window.localStorage.getItem("token")) {
+      console.log("no need to go here..");
+      $location.path('/standards');
+    }
+  });
 });

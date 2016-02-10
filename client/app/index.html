@@ -21,12 +21,14 @@
 
           <a href="/">Home</a>
           <a href="/standards">Standards</a>
-          <a href="/users/login">Login User</a>
-          <span ng-show="currentUser">
+          <span ng-hide="username">
+            <a href="/users/login">Login User</a>
+          </span>
+          <span ng-show="username">
            <a href="/users/logout">Logout User</a>
           </span>
           <hr>
-          <div ng-show="currentUser">
+          <div ng-show="username">
             <br>
             Welcome, {{username}} !
             <br>

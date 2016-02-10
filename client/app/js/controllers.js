@@ -1,10 +1,10 @@
 app.controller("MenuController", function($scope, $http, TokenFactory){
+
   $scope.$watch (
     function(){
       return TokenFactory.getToken();
     },
     function(newVal, oldVal){
-      $scope.currentUser = newVal;
       $scope.username =  TokenFactory.getUser();
     }
   )
@@ -15,7 +15,7 @@ app.controller("HomeController", function($scope, $http, TokenFactory){
   $scope.currentUser = TokenFactory.getToken();
 });
 
-app.controller("UsersLoginController", function($scope, $http, UsersFactory, TokenFactory){
+app.controller("UsersLoginController", function($scope, $http, UsersFactory, TokenFactory, $location){
     $scope.users = {}
     $scope.loginUser = function(){
       var data = {email: $scope.users.email, password: $scope.users.password};
@@ -23,6 +23,7 @@ app.controller("UsersLoginController", function($scope, $http, UsersFactory, Tok
         if(success.data.token && success.data.username){
             TokenFactory.setToken(success.data.token);
             TokenFactory.setUser(success.data.username);
+            $location.path("/standards")
         } else {
           alert("Invalid login.")
         }
@@ -34,14 +35,15 @@ app.controller("UsersLoginController", function($scope, $http, UsersFactory, Tok
     }
 });
 
-app.controller("UsersLogoutController", function($scope, TokenFactory){
-   TokenFactory.clearToken("token");
+app.controller("UsersLogoutController", function($scope, UsersFactory){
+
 });
 
 
 app.controller('StandardsIndexController',function($scope, StandardsFactory) {
   $scope.show_standards = false;
   StandardsFactory.getIndex().then(function(entries) {
+    // console.log("entries are", entries.data);
     $scope.standards = entries.data;
     $scope.show_standards = true;
   });

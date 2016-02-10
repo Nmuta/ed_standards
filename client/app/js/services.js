@@ -7,6 +7,11 @@ app.factory("UsersFactory", ['$http', function($http, $location){
   UsersFactory.loginUser =  function(data){
      return $http.post("http://localhost:3000/users/login", data );
   }
+
+  UsersFactory.logoutUser =  function(){
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+  }
   return UsersFactory;
 }]);
 
@@ -15,24 +20,21 @@ app.factory("TokenFactory", function(){
 
     TokenFactory.setToken = function(token){
       localStorage.setItem("token", token);
-      console.log("setting token: "+token);
     }
 
     TokenFactory.setUser= function(username){
       localStorage.setItem("username", username);
-      console.log("setting user "+username);
     }
 
     TokenFactory.getToken = function(){
       the_token = localStorage.getItem("token");
-      console.log("getting local storage item: "+the_token);
       return the_token;
     }
 
     TokenFactory.getUser = function(){
-      the_user = localStorage.getItem("username");
-      console.log("getting user : "+the_user);
-      return the_user;
+      username = localStorage.getItem("username");
+      console.log("app level --> getting user : "+username);
+      return username;
     }
 
     TokenFactory.clearToken = function(){
