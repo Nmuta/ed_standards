@@ -40,7 +40,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         resolve: {
         app: function(UsersFactory, $location){
           UsersFactory.logoutUser();
-          $location.path("/login");
+          $location.path("/");
         }
       }
       })
