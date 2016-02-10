@@ -49,18 +49,22 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
     $locationProvider.html5Mode(true);
 });
 
+// run this function _after_ the app was configured / booted
+// _but_ only once before any other thing happens (before controllers, routes...)
+// equivalent to $(document).ready()
+// think of it like only running on page refreshes
 app.run(function ($rootScope, $location, $window, TokenFactory) {
-  TokenFactory.getUser();
-  $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
-    if (next && next.restricted && !$window.localStorage.getItem("token")) {
-        $window.alert("You must be logged in to do that");
-        $location.path('/users/login');
+  // these are like before filters in Rails
+  // this is like middleware in express
+  $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+    if (nextRoute && nextRoute.restricted && !$window.localStorage.getItem("token")) {
+      $location.path('/users/login');
     }
 
-    if (next && next.preventWhenLoggedIn && $window.localStorage.getItem("token")) {
-      console.log("no need to go here..");
+    if (nextRoute && nextRoute.preventWhenLoggedIn && $window.localStorage.getItem("token")) {
       $location.path('/standards');
     }
   });
+
 });

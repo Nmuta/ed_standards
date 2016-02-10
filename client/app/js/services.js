@@ -47,20 +47,21 @@ app.factory("TokenFactory", function(){
 });
 
 app.factory("AuthInterceptor",  function(TokenFactory){
-
-    var AuthInterceptor = {request: addToken};
-
-    function addToken(config){
-
+  // 4 magic keys https://docs.angularjs.org/api/ng/service/$http
+  return {
+    request: function (config){
        var token = TokenFactory.getToken();
        if (token){
          config.headers = config.headers || {};
-         config.headers.Authorization = "Bearer: "+token;
+         config.headers.Authorization = "Bearer "+token;
        }
-       return config;
-    };
-
-    return AuthInterceptor;
+       return config; // not the best??  I think you should return a promise here
+    },
+    // requestError
+    // response - check for unauthorized, and redirect to login
+        // on a 500 show an error message by doing a $rootScope.$emit...
+    // responseError
+  };
 });
 
 

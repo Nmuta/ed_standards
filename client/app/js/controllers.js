@@ -10,7 +10,7 @@ app.controller("MenuController", function($scope, $http, TokenFactory){
   )
 });
 
-app.controller("HomeController", function($scope, $http, TokenFactory){
+app.controller("HomeController", function($scope, $http, TokenFactory, $rootScope){
   $scope.message = "welcome to the app";
   $scope.currentUser = TokenFactory.getToken();
 });
