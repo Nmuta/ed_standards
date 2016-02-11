@@ -1,6 +1,16 @@
-<h3>All Standards</h3>
+
+<div class="row_block">
+  <h3>All Standards</h3>
+</div>
+<div class="row_block" ng-show="is_admin">
+  <a href="/standards/new">Create Standard</a>
+</div>
 
 <div class="standards_collection">
+
+
+
+
   <div ng-show="show_standards">
     <div class="standard_detail" ng-repeat="standard in standards">
       {{standard.title}}

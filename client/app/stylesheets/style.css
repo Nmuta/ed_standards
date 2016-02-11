@@ -107,3 +107,38 @@ table.table-pattern tr:nth-child(odd){
   width: 300px;
   padding-top: 12px;
 }
+
+.menu_bar a{
+  display: inline-block;
+  width: 100px;
+  height: 20px;
+  margin: -1px;
+  text-align:center;
+  text-decoration: none;
+  background-color: #8A8A7A;
+  color: #eee;
+  border-radius: 1px;
+}
+
+.menu_bar a:hover{
+  background-color: #5A5A3A;
+  color: #fff;
+}
+
+div.row_block{
+  display: inline-block;
+}
+
+table.topic_table{
+  text-align:center;
+  border: 1px solid #333;
+}
+
+table.topic_table td{
+  border: 1px solid #555;
+}
+
+
+table.topic_table tr:nth-child(even){
+  background-color: #eee;
+}

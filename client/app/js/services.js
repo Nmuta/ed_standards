@@ -1,6 +1,6 @@
-// app.factory('StandardsFactory', function($resource) {
-//   return $resource('http://localhost:3000/standards/:id');
-// });
+app.factory('TopicsFactory', function($resource) {
+   return $resource('http://localhost:3000/topics/:id');
+});
 
 app.factory("UsersFactory", ['$http', function($http, $location){
   var UsersFactory = {}
@@ -11,6 +11,7 @@ app.factory("UsersFactory", ['$http', function($http, $location){
   UsersFactory.logoutUser =  function(){
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    localStorage.removeItem("admin");
   }
   return UsersFactory;
 }]);
@@ -26,6 +27,10 @@ app.factory("TokenFactory", function(){
       localStorage.setItem("username", username);
     }
 
+    TokenFactory.setAdmin= function(is_admin){
+      localStorage.setItem("admin", is_admin);
+    }
+
     TokenFactory.getToken = function(){
       the_token = localStorage.getItem("token");
       return the_token;
@@ -33,8 +38,12 @@ app.factory("TokenFactory", function(){
 
     TokenFactory.getUser = function(){
       username = localStorage.getItem("username");
-      console.log("app level --> getting user : "+username);
       return username;
+    }
+
+    TokenFactory.getAdmin = function(){
+      is_admin = localStorage.getItem("admin");
+      return is_admin ==="true";
     }
 
     TokenFactory.clearToken = function(){

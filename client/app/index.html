@@ -17,24 +17,32 @@
     <div class="page-wrap">
       <div class="form-box-container">
         <div ng-controller="MenuController">
-          <h5>Standards app</h5>
 
-          <a href="/">Home</a>
-          <a href="/standards">Standards</a>
-          <span ng-hide="username">
-            <a href="/users/login">Login User</a>
-          </span>
-          <span ng-show="username">
-           <a href="/users/logout">Logout User</a>
-          </span>
-          <hr>
           <div ng-show="username">
-            <br>
-            Welcome, {{username}} !
-            <br>
-            <a href="/standards/new">Create Standard</a>
+
+            <h3>Welcome, {{username}} !</h3>
 
           </div>
+
+          <div class="menu_bar">
+            <a href="/">Home</a>
+
+            <a href="/standards">Standards</a>
+            <span ng-hide="username">
+              <a href="/users/login">Login User</a>
+            </span>
+
+            <span ng-show="username">
+             <a href="/users/logout">Logout User</a>
+            </span>
+
+            <span ng-show="is_admin">
+             <a href="/admin">Admin panel </a>
+            </span>
+          </div>
+
+          <hr>
+
         </div>
         <div ng-view></div>
   </div>

@@ -8,6 +8,16 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: 'partials/home.html',
         controller: 'HomeController'
       })
+      .when('/topics', {
+        templateUrl: 'partials/topics/index.html',
+        controller: 'TopicsIndexController',
+        restricted: true
+      })
+      .when('/admin', {
+        templateUrl: 'partials/admin/index.html',
+        controller: 'AdminController',
+        restricted: true
+      })
       .when('/standards', {
         templateUrl: 'partials/standards/index.html',
         controller: 'StandardsIndexController',

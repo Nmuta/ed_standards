@@ -6,6 +6,7 @@ app.controller("MenuController", function($scope, $http, TokenFactory){
     },
     function(newVal, oldVal){
       $scope.username =  TokenFactory.getUser();
+      $scope.is_admin =  TokenFactory.getAdmin();
     }
   )
 });
@@ -15,6 +16,30 @@ app.controller("HomeController", function($scope, $http, TokenFactory, $rootScop
   $scope.currentUser = TokenFactory.getToken();
 });
 
+app.controller("AdminController", function($scope, TopicsFactory, $routeParams){
+    $scope.message = "welcome to the admin controller" ; 
+});
+
+app.controller("TopicsIndexController", function($scope, TopicsFactory, $routeParams){
+   var topics = TopicsFactory.query(function() {
+     $scope.topics = topics;
+   });
+});
+
+app.controller('StandardsIndexController',function($scope, StandardsFactory, TokenFactory, $rootScope) {
+  $scope.show_standards = false;
+
+  StandardsFactory.getIndex().then(function(entries) {
+    // console.log("entries are", entries.data);
+    $scope.standards = entries.data;
+    $scope.show_standards = true;
+  });
+
+  $scope.is_admin  = TokenFactory.getAdmin();
+
+})
+
+
 app.controller("UsersLoginController", function($scope, $http, UsersFactory, TokenFactory, $location){
     $scope.users = {}
     $scope.loginUser = function(){
@@ -23,6 +48,7 @@ app.controller("UsersLoginController", function($scope, $http, UsersFactory, Tok
         if(success.data.token && success.data.username){
             TokenFactory.setToken(success.data.token);
             TokenFactory.setUser(success.data.username);
+            TokenFactory.setAdmin(success.data.admin);
             $location.path("/standards")
         } else {
           alert("Invalid login.")
@@ -40,13 +66,16 @@ app.controller("UsersLogoutController", function($scope, UsersFactory){
 });
 
 
-app.controller('StandardsIndexController',function($scope, StandardsFactory) {
+app.controller('StandardsIndexController',function($scope, StandardsFactory, TokenFactory, $rootScope) {
   $scope.show_standards = false;
+
   StandardsFactory.getIndex().then(function(entries) {
     // console.log("entries are", entries.data);
     $scope.standards = entries.data;
     $scope.show_standards = true;
   });
+
+  $scope.is_admin  = TokenFactory.getAdmin();
 
 }).controller('StandardsShowController',function($scope, StandardsFactory, $routeParams) {
   console.log("show called");
@@ -64,7 +93,7 @@ app.controller('StandardsIndexController',function($scope, StandardsFactory) {
     $scope.addStandard = function(){
       params = {title:  $scope.standard.title};
       StandardsFactory.postNew(params).then(function(success){
-         console.log("successful post from "+success.data.response)
+         $location.path("/standards")
     }, errorHandler );
   }
   function errorHandler(){

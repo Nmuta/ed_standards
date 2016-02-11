@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var standards = require('./routes/standards');
+var topics = require('./routes/topics');
 var auth_checker = require('./lib/auth_checker');
 var bcrypt = require('bcrypt');
 
@@ -37,6 +38,7 @@ app.use('/', routes);
  app.use('/', expressJwt({secret: jwtSecret}).unless({path: ['/users/login']}));
 app.use('/users', users);
 app.use('/standards', standards);
+app.use('/topics', topics);
 
 
 // catch 404 and forward to error handler

@@ -6,10 +6,20 @@ var jwt = require("jsonwebtoken");
 //TODO: relocate to .env
 var jwtSecret = "asdfkladsfasdfsd";
 
+var Role = bookshelf.Model.extend({
+  tableName: 'roles',
+  users: function() {
+    return this.hasMany(Users);
+  }
+});
 
 var Users = bookshelf.Model.extend({
-  tableName: 'users'
+  tableName: 'users',
+  role: function() {
+    return this.belongsTo(Role);
+  }
 });
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -19,14 +29,14 @@ router.get('/', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
-  Users.where('email',email ).fetch().then(function(usr) {
+  Users.where('email',email ).fetch({withRelated: ['role']}).then(function(usr) {
     user = usr.toJSON();
     var hshed_pwd =user.password;
     bcrypt.compare(password, hshed_pwd, function(err, response) {
       if (response){
         var user_bundle = {email: user.email, username: user.name }
         var token  = jwt.sign(user_bundle, jwtSecret);
-        res.json({username: user.name, token: token});
+        res.json({username: user.name, token: token, admin: user.role.name==="Admin"});
         console.log("success logging in a user");
       }else{
         console.log("bad password");
