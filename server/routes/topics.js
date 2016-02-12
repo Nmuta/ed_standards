@@ -39,7 +39,14 @@ router.post('/:id', function(req, res, next) {
   });
 });
 
-router.get('/:id/delete', function(req, res, next) {
+// router.get('/:id/delete', function(req, res, next) {
+//   var topic_id = req.params.id;
+//   new Topics('id', topic_id).destroy().then(function(topic) {
+//     res.json({});
+//   });
+// });
+
+router.delete('/:id', function(req, res, next) {
   var topic_id = req.params.id;
   new Topics('id', topic_id).destroy().then(function(topic) {
     res.json({});

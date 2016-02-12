@@ -17,13 +17,21 @@ app.controller("HomeController", function($scope, $http, TokenFactory, $rootScop
 });
 
 app.controller("AdminController", function($scope, TopicsFactory, $routeParams){
-    $scope.message = "welcome to the admin controller" ; 
+    $scope.message = "welcome to the admin controller" ;
 });
 
-app.controller("TopicsIndexController", function($scope, TopicsFactory, $routeParams){
+app.controller("TopicsIndexController", function($scope, TopicsFactory, $routeParams, $window){
    var topics = TopicsFactory.query(function() {
      $scope.topics = topics;
    });
+
+   $scope.deleteTopic = function(topic_id){
+     if ($window.confirm("Are you sure you want to delete this topic?")){
+       var topic = TopicsFactory.get({id: topic_id}, function(){
+           topic.$delete(topic);
+       });
+     }
+   }
 });
 
 app.controller('StandardsIndexController',function($scope, StandardsFactory, TokenFactory, $rootScope) {
