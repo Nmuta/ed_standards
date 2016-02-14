@@ -13,6 +13,11 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         controller: 'TopicsIndexController',
         restricted: true
       })
+      .when('/topics/:id', {
+        templateUrl: 'partials/topics/form.html',
+        controller: 'TopicsModifyController',
+        restricted: true
+      })
       .when('/admin', {
         templateUrl: 'partials/admin/index.html',
         controller: 'AdminController',

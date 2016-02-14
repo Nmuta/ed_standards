@@ -1,5 +1,11 @@
 app.factory('TopicsFactory', function($resource) {
-   return $resource('http://localhost:3000/topics/:id');
+  console.log("boss");
+   return $resource('http://localhost:3000/topics/:id', {id:"@id"},
+       {
+           'update': { method:'POST' }
+       }
+
+ );
 });
 
 app.factory("UsersFactory", ['$http', function($http, $location){

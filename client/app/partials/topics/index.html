@@ -5,7 +5,7 @@
   <tr ng-repeat="topic in topics">
        <td>{{topic.name}}</td>
        <td>{{topic.short_name}}</td>
-       <td><a href="#"> edit </a></td>
+       <td><a href="#" ng-click="editTopic(topic.id)"> edit </a></td>
        <td><a href="#" ng-click="deleteTopic(topic.id)"> delete </a></td>
   </tr>
 </table>

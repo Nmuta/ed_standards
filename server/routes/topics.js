@@ -27,14 +27,18 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  new Topics(req.body).save().then(function(model) {
-    var response = {response: "server side topic creation"}
+  console.log("post to collection");
+  var body = {name: req.body.name, short_name: req.body.short_name}
+  new Topics(body).save().then(function(model) {
+    var response = {response: "server side topic creation?"}
     res.json(response);
   });
 });
 
-router.post('/:id', function(req, res, next) {
-   new Topics('id', req.params.id).save(req.body, {patch: true}).then(function(topic) {
+router.put('/:id', function(req, res, next) {
+  console.log('putting:  body',req.body );
+  var body = {name: req.body.name, short_name: req.body.short_name}
+   new Topics('id', req.params.id).save(body, {patch: true}).then(function(topic) {
     res.json({response: true});
   });
 });

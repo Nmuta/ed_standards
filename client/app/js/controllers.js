@@ -20,7 +20,7 @@ app.controller("AdminController", function($scope, TopicsFactory, $routeParams){
     $scope.message = "welcome to the admin controller" ;
 });
 
-app.controller("TopicsIndexController", function($scope, TopicsFactory, $routeParams, $window){
+app.controller("TopicsIndexController", function($scope, TopicsFactory, $routeParams, $window, $location){
    var topics = TopicsFactory.query(function() {
      $scope.topics = topics;
    });
@@ -32,6 +32,25 @@ app.controller("TopicsIndexController", function($scope, TopicsFactory, $routePa
        });
      }
    }
+
+   $scope.editTopic = function(topic_id){
+    $location.path("/topics/"+topic_id);
+   }
+});
+
+app.controller("TopicsModifyController", function($scope, TopicsFactory, $routeParams, $window){
+  var id = $routeParams.id;
+  $scope.topic = {};
+  var topic = TopicsFactory.get({id: id}, function(topic){
+      $scope.topic = topic;
+      $scope.submit_text = "Update Topic";
+      console.log("I'm here and my short name is "+topic.short_name);
+  });
+
+  $scope.submitForm  = function(topic_id){
+    var topic = TopicsFactory.get({id: id});
+    TopicsFactory.update({name: $scope.topic.name, short_name: $scope.topic.short_name}, topic);
+  }
 });
 
 app.controller('StandardsIndexController',function($scope, StandardsFactory, TokenFactory, $rootScope) {
