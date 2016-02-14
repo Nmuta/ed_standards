@@ -26,11 +26,15 @@ app.controller("TopicsIndexController", function($scope, TopicsFactory, $routePa
    });
 
    $scope.deleteTopic = function(topic_id){
-     if ($window.confirm("Are you sure you want to delete this topic?")){
+    //  if ($window.confirm("Are you sure you want to delete this topic?")){
        var topic = TopicsFactory.get({id: topic_id}, function(){
-           topic.$delete(topic);
+           topic.$delete(topic, function(){
+             console.log("this is after i delete the topic");
+             $location.path("/topics");
+           });
        });
-     }
+    //  }
+    $location.path("/topics");
    }
 
    $scope.editTopic = function(topic_id){
@@ -38,7 +42,7 @@ app.controller("TopicsIndexController", function($scope, TopicsFactory, $routePa
    }
 });
 
-app.controller("TopicsModifyController", function($scope, TopicsFactory, $routeParams, $window){
+app.controller("TopicsModifyController", function($scope, TopicsFactory, $routeParams, $window, $location){
   var id = $routeParams.id;
   $scope.topic = {};
   var topic = TopicsFactory.get({id: id}, function(topic){
@@ -48,8 +52,22 @@ app.controller("TopicsModifyController", function($scope, TopicsFactory, $routeP
   });
 
   $scope.submitForm  = function(topic_id){
-    var topic = TopicsFactory.get({id: id});
-    TopicsFactory.update({name: $scope.topic.name, short_name: $scope.topic.short_name}, topic);
+    var topic = TopicsFactory.get({id: id}, function(topic_found){
+      TopicsFactory.update({id: id}, $scope.topic, function(resd){
+         $location.path("/topics");
+      });
+    });
+  }
+});
+
+app.controller("TopicsNewController", function($scope, TopicsFactory, $routeParams, $window, $location){
+
+  $scope.topic = {};
+  $scope.submit_text = "Create Topic";
+  $scope.submitForm  = function(topic_id){
+      TopicsFactory.save($scope.topic, function(resd){
+         $location.path("/topics");
+    });
   }
 });
 

@@ -27,7 +27,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  console.log("post to collection");
+  console.log("post expecs this name: ", req.body.name);
   var body = {name: req.body.name, short_name: req.body.short_name}
   new Topics(body).save().then(function(model) {
     var response = {response: "server side topic creation?"}
@@ -35,8 +35,8 @@ router.post('/', function(req, res, next) {
   });
 });
 
-router.put('/:id', function(req, res, next) {
-  console.log('putting:  body',req.body );
+router.post('/:id', function(req, res, next) {
+  console.log('post:  body',req.body );
   var body = {name: req.body.name, short_name: req.body.short_name}
    new Topics('id', req.params.id).save(body, {patch: true}).then(function(topic) {
     res.json({response: true});

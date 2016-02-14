@@ -1,9 +1,9 @@
 app.factory('TopicsFactory', function($resource) {
   console.log("boss");
-   return $resource('http://localhost:3000/topics/:id', {id:"@id"},
-       {
-           'update': { method:'POST' }
-       }
+   return $resource('http://localhost:3000/topics/:id', {id: '@id'},
+      {
+        'update': { method:'POST' }
+      }
 
  );
 });
