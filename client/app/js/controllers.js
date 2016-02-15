@@ -1,4 +1,10 @@
-app.controller("MenuController", function($scope, $http, TokenFactory){
+app.controller("MenuController", function($scope, $http, TokenFactory, UsersFactory){
+
+  $scope.is_admin = true;
+
+  // UsersFactory.adminCheck.then(function(permission){
+  //   $scope.is_admin = permission;
+  // })
 
   $scope.$watch (
     function(){
@@ -6,7 +12,6 @@ app.controller("MenuController", function($scope, $http, TokenFactory){
     },
     function(newVal, oldVal){
       $scope.username =  TokenFactory.getUser();
-      $scope.is_admin =  TokenFactory.getAdmin();
     }
   )
 });
@@ -16,8 +21,9 @@ app.controller("HomeController", function($scope, $http, TokenFactory, $rootScop
   $scope.currentUser = TokenFactory.getToken();
 });
 
-app.controller("AdminController", function($scope, TopicsFactory, $routeParams){
+app.controller("AdminController", function($scope, TopicsFactory, $routeParams, $window){
     $scope.message = "welcome to the admin controller" ;
+    console.log("current user is ... "+$window.sessionStorage.currentUser)
 });
 
 app.controller("TopicsIndexController", function($scope, TopicsFactory, $routeParams, $window, $location){
@@ -85,7 +91,7 @@ app.controller('StandardsIndexController',function($scope, StandardsFactory, Tok
 })
 
 
-app.controller("UsersLoginController", function($scope, $http, UsersFactory, TokenFactory, $location){
+app.controller("UsersLoginController", function($scope, $http, UsersFactory, TokenFactory, $location, $window){
     $scope.users = {}
     $scope.loginUser = function(){
       var data = {email: $scope.users.email, password: $scope.users.password};
@@ -93,6 +99,7 @@ app.controller("UsersLoginController", function($scope, $http, UsersFactory, Tok
         if(success.data.token && success.data.username){
             TokenFactory.setToken(success.data.token);
             TokenFactory.setUser(success.data.username);
+            $window.sessionStorage.currentUser = success.data.username;
             TokenFactory.setAdmin(success.data.admin);
             $location.path("/standards")
         } else {

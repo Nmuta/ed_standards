@@ -8,7 +8,7 @@ exports.seed = function(knex, Promise) {
       var adm = roles[0].id;
       var usr = roles[1].id;
       return (
-        knex('users').where({name: "Sheriff"}).update({role_id: adm}).then(function(){
+        knex('users').where({name: "Addy"}).update({role_id: adm}).then(function(){
           return  knex('users').where({name: "Joe"}).update({role_id: usr});
         })
       );

@@ -8,8 +8,15 @@ app.factory('TopicsFactory', function($resource) {
  );
 });
 
-app.factory("UsersFactory", ['$http', function($http, $location){
-  var UsersFactory = {}
+app.factory("UsersFactory", ['$http', function($http, $location, TokenFactory){
+  var UsersFactory = {};
+
+  UsersFactory.adminCheck = function(){
+    //  var user_id = TokenFactory.getUserId();
+    //  return $http.post("http://localhost:3000/users/login", data );
+  }
+
+
   UsersFactory.loginUser =  function(data){
      return $http.post("http://localhost:3000/users/login", data );
   }
@@ -80,7 +87,7 @@ app.factory("AuthInterceptor",  function(TokenFactory){
 });
 
 
-app.factory('StandardsFactory', ['$http', function($http, $location) {
+app.factory('StandardsFactory', ['$http', '$location', function($http, $location) {
 
   var StandardsFactory = {};
 
