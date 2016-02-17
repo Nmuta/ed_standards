@@ -1,5 +1,5 @@
 app.factory('TopicsFactory', function($resource) {
-  console.log("boss");
+
    return $resource('http://localhost:3000/topics/:id', {id: '@id'},
       {
         'update': { method:'POST' }
@@ -8,40 +8,25 @@ app.factory('TopicsFactory', function($resource) {
  );
 });
 
-app.factory("UsersFactory", ['$http', function($http, $location, TokenFactory){
-  var UsersFactory = {};
-
-  UsersFactory.adminCheck = function(){
-    //  var user_id = TokenFactory.getUserId();
-    //  return $http.post("http://localhost:3000/users/login", data );
-  }
-
-
-  UsersFactory.loginUser =  function(data){
-     return $http.post("http://localhost:3000/users/login", data );
-  }
-
-  UsersFactory.logoutUser =  function(){
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("admin");
-  }
-  return UsersFactory;
-}]);
-
 app.factory("TokenFactory", function(){
     var TokenFactory  =  {};
 
-    TokenFactory.setToken = function(token){
+    TokenFactory.getUserId = function(){
+      console.log("getUserId has been called.. ");
+      uid = localStorage.getItem("ud");
+      var ud = uid ?  uid.slice(6) : false;
+      return ud;
+    }
+
+    TokenFactory.setToken = function(token, uid){
       localStorage.setItem("token", token);
+      var prefix = token.slice(10,15);
+      // hide the userid in a random looking string based on token
+      localStorage.setItem("ud", prefix+"1"+uid);
     }
 
     TokenFactory.setUser= function(username){
       localStorage.setItem("username", username);
-    }
-
-    TokenFactory.setAdmin= function(is_admin){
-      localStorage.setItem("admin", is_admin);
     }
 
     TokenFactory.getToken = function(){
@@ -54,14 +39,10 @@ app.factory("TokenFactory", function(){
       return username;
     }
 
-    TokenFactory.getAdmin = function(){
-      is_admin = localStorage.getItem("admin");
-      return is_admin ==="true";
-    }
-
     TokenFactory.clearToken = function(){
       localStorage.removeItem("token");
       localStorage.removeItem("username");
+      localStorage.removeItem("ud");
       console.log("clearing local storage items");
     }
 
@@ -105,4 +86,27 @@ app.factory('StandardsFactory', ['$http', '$location', function($http, $location
 
   return StandardsFactory;
 
+}]);
+
+app.factory("UsersFactory", ['$http', 'TokenFactory', function($http, TokenFactory){
+  var UsersFactory = {};
+
+  console.log("Token Factory is "+TokenFactory);
+  var user_id = TokenFactory.getUserId();
+
+  UsersFactory.checkAdmin = function(){
+    var data = {uid: user_id};
+    return $http.post("http://localhost:3000/users/checkadmin", data);
+  }
+
+  UsersFactory.loginUser =  function(data){
+     return $http.post("http://localhost:3000/users/login", data );
+  }
+
+  UsersFactory.logoutUser =  function(){
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("ud");
+  }
+  return UsersFactory;
 }]);

@@ -1,0 +1,12 @@
+{
+  "firebase": "standards1000",
+  "rewrites": [ {
+    "source": "**/**/**",
+    "destination": "/index.html"
+    }],
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

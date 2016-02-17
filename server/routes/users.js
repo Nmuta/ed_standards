@@ -20,10 +20,50 @@ var Users = bookshelf.Model.extend({
   }
 });
 
+// get /standards/id
+function getStandards() {
+  var response = {
+    links: {
+      self: ".....",
+      edit: "/standards/57/edit", // <-- only pu this in if they have permission
+      delete: "/standards/57/edit", // <-- only pu this in if they have permission
+      children: "/standards/57/sub-standards", // <-- only pu this in if they have permission
+    },
+    data: {
+      id: 57,
+      attributes: {
+        name: "users should be nice and smile"
+      }
+    }
+  }
+}
+
+//first middleware
+function populateUser(req, res, next){
+  var user = jwt.verify(token, jwtSecret);
+  /// tie req.user to user .....
+  // pass to next () 
+}
+
+// router.use(populateUser);
+// app.use(populateUser); // <-- in app.js (apply to _all_ routes)
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', populateUser, function () {
+
+});
+
+// TODO: change /checkadmin /me - just return a json object w/ that user's roles
+router.post('/checkadmin', function(req, res, next) {
+  console.log("checking if this is an admin ");
+  var uid = req.body.uid;
+  Users.where('id',uid ).fetch({withRelated: ['role']}).then(function(usr) {
+     user = usr.toJSON();
+     var is_admin = usr.role.name==="Admin" ? true : false;
+     console.log("user role is ", usr.role.name);
+     console.log("am I an admin? "+is_admin);
+     res.send({is_admin: is_admin});
+  });
 });
 
 router.post('/login', function(req, res, next) {
@@ -34,9 +74,9 @@ router.post('/login', function(req, res, next) {
     var hshed_pwd =user.password;
     bcrypt.compare(password, hshed_pwd, function(err, response) {
       if (response){
-        var user_bundle = {email: user.email, username: user.name }
+        var user_bundle = {id: user.id }
         var token  = jwt.sign(user_bundle, jwtSecret);
-        res.json({username: user.name, token: token, admin: user.role.name==="Admin"});
+        res.json({username: user.name, uid: user.id, token: token});
         console.log("success logging in a user");
       }else{
         console.log("bad password");

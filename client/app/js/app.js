@@ -6,7 +6,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'partials/home.html',
-        controller: 'HomeController'
+        controller: 'HomeController',
       })
       .when('/topics', {
         templateUrl: 'partials/topics/index.html',
